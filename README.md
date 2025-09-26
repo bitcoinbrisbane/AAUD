@@ -1,0 +1,2 @@
+# AAUD
+AAUD Stable coin
