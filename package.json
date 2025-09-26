@@ -1,0 +1,17 @@
+{
+  "name": "aaud-token-project",
+  "version": "1.0.0",
+  "description": "AAUD stable coin with token swap functionality",
+  "main": "index.js",
+  "scripts": {
+    "build": "forge build",
+    "test": "forge test",
+    "deploy": "forge script script/Deploy.s.sol --rpc-url localhost --broadcast",
+    "dev:frontend": "cd frontend && npm run dev",
+    "build:frontend": "cd frontend && npm run build",
+    "install:frontend": "cd frontend && npm install"
+  },
+  "keywords": ["erc20", "defi", "foundry", "react", "vite"],
+  "author": "Bitcoin Brisbane",
+  "license": "MIT"
+}
