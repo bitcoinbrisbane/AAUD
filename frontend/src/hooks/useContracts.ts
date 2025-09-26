@@ -1,6 +1,6 @@
 import { useReadContract, useWriteContract, useWaitForTransactionReceipt } from 'wagmi';
 import { parseUnits, formatUnits } from 'viem';
-import { AAUD_TOKEN_ABI, TOKEN_SWAP_ABI, ERC20_ABI } from '../contracts/abis';
+import { TOKEN_SWAP_ABI, ERC20_ABI } from '../contracts/abis';
 import { CONTRACT_ADDRESSES } from '../config/web3';
 
 // Hook for reading token balance

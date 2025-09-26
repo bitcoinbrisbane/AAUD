@@ -1,4 +1,3 @@
-import React from 'react';
 import '@rainbow-me/rainbowkit/styles.css';
 import { WagmiProvider } from 'wagmi';
 import { RainbowKitProvider } from '@rainbow-me/rainbowkit';

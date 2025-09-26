@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useAccount } from 'wagmi';
 import { CONTRACT_ADDRESSES } from '../config/web3';
 import {
   useTokenBalance,
-  useTokenInfo,
   useTokenAllowance,
   useIsTokenWhitelisted,
   useTokenApproval,
@@ -40,7 +39,6 @@ export function TokenSwap() {
   const [swapAmount, setSwapAmount] = useState('');
 
   // Token info and balances
-  const tokenInfo = useTokenInfo(selectedToken.address);
   const tokenBalance = useTokenBalance(selectedToken.address, address);
   const aaudBalance = useTokenBalance(CONTRACT_ADDRESSES.AAUD_TOKEN as `0x${string}`, address);
   
