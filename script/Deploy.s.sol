@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.19;
+pragma solidity ^0.8.20;
 
 import "forge-std/Script.sol";
 import "../src/AAUDToken.sol";
-import "../src/TokenSwap.sol";
+import "../src/TokenEater.sol";
 import "../src/MockERC20.sol";
 
 contract DeployScript is Script {
@@ -13,13 +13,17 @@ contract DeployScript is Script {
         
         vm.startBroadcast(deployerPrivateKey);
         
-        // Deploy AAUD Token
-        AAUDToken aaudToken = new AAUDToken("AAUD Stable Coin", "AAUD", deployer);
+        // Deploy AAUD Token first
+        AAUDToken aaudToken = new AAUDToken("AAUD Stable Coin", "AAUD");
         console.log("AAUD Token deployed at:", address(aaudToken));
         
-        // Deploy TokenSwap contract
-        TokenSwap tokenSwap = new TokenSwap(address(aaudToken), deployer);
-        console.log("TokenSwap contract deployed at:", address(tokenSwap));
+        // Deploy TokenEater contract
+        TokenEater tokenEater = new TokenEater(address(aaudToken), deployer);
+        console.log("TokenEater contract deployed at:", address(tokenEater));
+        
+        // Grant minter role to TokenEater
+        aaudToken.grantRole(aaudToken.MINTER_ROLE(), address(tokenEater));
+        console.log("Granted MINTER_ROLE to TokenEater");
         
         // Deploy mock tokens for testing (only on testnets)
         if (block.chainid != 1) { // Not mainnet
@@ -32,9 +36,9 @@ contract DeployScript is Script {
             console.log("Mock DAI deployed at:", address(mockDAI));
             
             // Whitelist mock tokens
-            tokenSwap.setTokenWhitelist(address(mockUSDC), true);
-            tokenSwap.setTokenWhitelist(address(mockUSDT), true);
-            tokenSwap.setTokenWhitelist(address(mockDAI), true);
+            tokenEater.setTokenWhitelist(address(mockUSDC), true);
+            tokenEater.setTokenWhitelist(address(mockUSDT), true);
+            tokenEater.setTokenWhitelist(address(mockDAI), true);
             
             console.log("Mock tokens whitelisted");
         }
@@ -44,7 +48,7 @@ contract DeployScript is Script {
         // Log deployment info
         console.log("Deployment completed!");
         console.log("AAUD Token:", address(aaudToken));
-        console.log("TokenSwap:", address(tokenSwap));
+        console.log("TokenEater:", address(tokenEater));
         console.log("Deployer:", deployer);
         console.log("Chain ID:", block.chainid);
     }
